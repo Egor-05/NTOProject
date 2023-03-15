@@ -14,7 +14,7 @@ class MainConfig(AppConfig):
             fieldnames = {i: [] for i in reader.fieldnames[1:]}
             for row in reader:
                 for i in fieldnames:
-                    fieldnames[i].append(int(row[i]))
+                    fieldnames[i].append(float(row[i]))
             for i in fieldnames:
                 si = ShareInfo(name=i, info=fieldnames[i])
                 si.save()

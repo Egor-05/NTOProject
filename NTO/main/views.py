@@ -65,24 +65,31 @@ class LogoutView(LoginRequiredMixin, AuthViews.LogoutView):
 #         return reverse('main:marko', kwargs={'params': self.params})
 
 
-class ResultPage(TemplateView):
-    template_name = 'base.html'
-
-    def get(self, request, *args, **kwargs):
-        if kwargs['params'][1]:
-            a = get_max_risk
-        return self.render_to_response({})
-
-
 def main(request):
     if request.method == 'POST':
         form = ShareParamsForm(request.POST)
         if form.is_valid():
             params = [form.cleaned_data["share_names"], form.cleaned_data["minimum_profit"],
                       form.cleaned_data["maximum_risk"]]
-            print(params)
-            return redirect('/result', kwargs={'params': params})
+            return redirect('/result', params=params)
 
     else:
         form = ShareParamsForm()
     return render(request, 'base_form.html', {'form': form})
+
+
+def respage(request, params):
+    print(params)
+    doll = DollData.objects.get(id=id)
+    print("Doll=", doll)
+    print("DOG_TYPE=", type(doll))
+    return render(request, 'data/save.html', {'doll': doll})
+
+# class ResultPage(TemplateView):
+#     template_name = 'base.html'
+
+#     def get(self, request, *args, **kwargs):
+#         print(kwargs)
+#         # if kwargs['params'][1]:
+#         #     a = get_min_profit(kwargs['params'][0], kwargs['params'][2])
+#         return self.render_to_response({})
