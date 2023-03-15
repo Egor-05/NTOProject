@@ -2,6 +2,14 @@ import django.contrib.auth.forms as UserForms
 from django.contrib.auth.models import User
 from django import forms
 
+COMPANIES = [('SBER', 'SBER'), ('PLZL', 'PLZL'), ('POLY', 'POLY'), ('GAZP', 'GAZP'),
+             ('LKOH', 'LKOH'), ('TCSG', 'TCSG'), ('MOEX', 'MOEX'), ('TATN', 'TATN'),
+             ('ROSN', 'ROSN'), ('SBERP', 'SBERP'), ('FLOT', 'FLOT'), ('SELG', 'SELG'),
+             ('MTLRP', 'MTLRP'), ('NVTK', 'NVTK'), ('VKCO', 'VKCO'), ('POSI', 'POSI'),
+             ('YNDX', 'YNDX'), ('MTLR', 'MTLR'), ('MAGN', 'MAGN'), ('CBOM', 'CBOM'),
+             ('GMKN', 'GMKN'), ('CHMF', 'CHMF'), ('PHOR', 'PHOR'), ('BSPB', 'BSPB'),
+             ('MGNT', 'MGNT')]
+
 
 class FormStyleMixin(forms.Form):
     def __init__(self, *args, **kwargs):
@@ -25,9 +33,7 @@ class LoginUserForm(UserForms.AuthenticationForm, FormStyleMixin):
 
 
 class ShareParamsForm(forms.Form):
-    share_names = forms.MultipleChoiceField(label='Названия акций',
-                                            choices=[('1', '1'), ('1', '1'), ('1', '1'), ('1', '1'), ('2', '2'),
-                                                     ('3цукацууаца', 'ауаываываыа3')],
+    share_names = forms.MultipleChoiceField(label='Названия акций', choices=COMPANIES,
                                             widget=forms.CheckboxSelectMultiple)
     minimum_profit = forms.FloatField(min_value=0, required=False, label='Минимальня выгода')
     maximum_risk = forms.FloatField(min_value=0, max_value=100, required=False, label='Максимальный риск')

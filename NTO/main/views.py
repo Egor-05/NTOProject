@@ -4,8 +4,8 @@ from django.urls.base import reverse_lazy
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
-from django.urls import reverse
 from django.shortcuts import render, redirect
+from .utils import get_max_risk, get_min_profit
 
 from .forms import RegisterUserForm, LoginUserForm, ShareParamsForm
 
@@ -69,6 +69,8 @@ class ResultPage(TemplateView):
     template_name = 'base.html'
 
     def get(self, request, *args, **kwargs):
+        if kwargs['params'][1]:
+            a = get_max_risk
         return self.render_to_response({})
 
 
