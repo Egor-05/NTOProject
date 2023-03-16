@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 {% if found %}
@@ -9,6 +10,7 @@
     {% endfor %}
     <h2>Риск - {{risk}}%</h2>
     <h2>Минимальная прибыль - {{profit}}</h2>
+    <img src="../static/Mark.png">
 {% else %}
     <h1>Для заданных параметров оптимальную стратегию найти невозможно</h1>
 {% endif %}
