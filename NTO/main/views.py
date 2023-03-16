@@ -13,6 +13,7 @@ from .forms import RegisterUserForm, LoginUserForm, ShareParamsForm
 # Create your views here.
 
 
+# Регистрация
 class RegisterView(CreateView):
     form_class = RegisterUserForm
     template_name = 'base_form.html'
@@ -37,6 +38,7 @@ class RegisterView(CreateView):
         return result
 
 
+# Вход в аккаунт
 class LoginView(AuthViews.LoginView):
     form_class = LoginUserForm
     template_name = 'base_form.html'
@@ -47,24 +49,12 @@ class LoginView(AuthViews.LoginView):
     }
 
 
+# Выход из аккаунта
 class LogoutView(LoginRequiredMixin, AuthViews.LogoutView):
     template_name = 'users/logout.html'
 
 
-# class MainPage(FormView):
-#     template_name = 'base_form.html'
-#     form_class = ShareParamsForm
-
-#     def form_valid(self, form):
-#         a = form.cleaned_data["share_names"]
-#         print(a)
-#         self.params = [a, form.cleaned_data["minimum_profit"], form.cleaned_data["maximum_risk"]]
-#         return super().form_valid(form)
-
-#     def get_success_url(self):
-#         return reverse('main:marko', kwargs={'params': self.params})
-
-
+# Основная страница + форма для получения данных по портфелю
 def main(request):
     if request.method == 'POST':
         form = ShareParamsForm(request.POST)
@@ -79,6 +69,7 @@ def main(request):
     return render(request, 'base_form.html', {'form': form})
 
 
+# Вывод рекомендация для портфеля
 def respage(request):
     params = request.session.get('params')
     if params[2]:

@@ -1,12 +1,10 @@
-import numpy as np
-import random
 from .models import ShareInfo
 import numpy as np
 import random
-import pandas as pd
 import matplotlib.pyplot as plt
 
 
+# Модель Марковица + построение графика - весь файл
 def port_risk(cov, mat_o, max_risk):
     value = [i for i in mat_o]
     ma_dox=0
@@ -43,6 +41,7 @@ def port_risk(cov, mat_o, max_risk):
     for i in range(5):
         doli[a[i]] = max_doli[i]
     return [round(ma_dox, 5), round(risk, 5), doli, data]
+
 
 def port_sum(cov, mat_o, su):
     value = [i for i in mat_o]
@@ -83,7 +82,6 @@ def port_sum(cov, mat_o, su):
     pass
 
 
-
 def make_gr(data, save_as):
     fig, ax = plt.subplots(1, figsize=(6, 6))
     ax.set_xlabel('Риск')
@@ -103,6 +101,7 @@ def cov_table(data):
         for y in range(5):
             table[i][y] = table[i][y]/10000
     return table
+
 
 def filter(ob, data):
     fl = {}
