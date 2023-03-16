@@ -71,25 +71,29 @@ def main(request):
         if form.is_valid():
             params = [form.cleaned_data["share_names"], form.cleaned_data["minimum_profit"],
                       form.cleaned_data["maximum_risk"]]
-            return redirect('/result', params=params)
+            request.session['params'] = params
+            return redirect('/result/')
 
     else:
         form = ShareParamsForm()
     return render(request, 'base_form.html', {'form': form})
 
 
-def respage(request, params):
-    print(params)
-    doll = DollData.objects.get(id=id)
-    print("Doll=", doll)
-    print("DOG_TYPE=", type(doll))
-    return render(request, 'data/save.html', {'doll': doll})
-
-# class ResultPage(TemplateView):
-#     template_name = 'base.html'
-
-#     def get(self, request, *args, **kwargs):
-#         print(kwargs)
-#         # if kwargs['params'][1]:
-#         #     a = get_min_profit(kwargs['params'][0], kwargs['params'][2])
-#         return self.render_to_response({})
+def respage(request):
+    params = request.session.get('params')
+    if params[2]:
+        res = get_min_profit(round(params[2] / 100, 5), params[0])
+    else:
+        res = get_max_risk(params[1], params[0])
+    companies_string = ', '.join(params[0])
+    companies_list = [[i, res[2][i] * 100] for i in res[2]]
+    risk = res[1]
+    profit = res[0]
+    if res[0] != -1:
+        return render(request, 'marko_res.html',
+                      {'companies_string': companies_string, 'companies_list': companies_list, 'risk': risk,
+                       'profit': profit, 'found': True})
+    else:
+        return render(request, 'marko_res.html',
+                      {'companies_string': companies_string, 'companies_list': companies_list, 'risk': risk,
+                       'profit': profit, 'found': False})

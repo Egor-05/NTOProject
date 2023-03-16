@@ -39,15 +39,15 @@ class ShareParamsForm(forms.Form):
     maximum_risk = forms.FloatField(min_value=0, max_value=100, required=False, label='Максимальный риск')
 
     def clean_share_names(self):
-        if len(self.cleaned_data['share_names']) > 5:
-            raise forms.ValidationError('Можно выбрать не более 5-ти полей')
+        if len(self.cleaned_data['share_names']) != 5:
+            raise forms.ValidationError('Выберите ровно 5 значений!')
         return self.cleaned_data['share_names']
 
     def clean_maximum_risk(self):
         minimum_profit = self.cleaned_data.get('minimum_profit')
         maximum_risk = self.cleaned_data.get('maximum_risk')
         if not minimum_profit and not maximum_risk:
-            raise forms.ValidationError('Заполните или поле минимальная выгода или поле максимальный риск')
+            raise forms.ValidationError('Заполните или поле минимальная выгода или поле максимальный риск!')
         if minimum_profit and maximum_risk:
-            raise forms.ValidationError('Заполните или поле минимальная выгода или поле максимальный риск')
+            raise forms.ValidationError('Заполните или поле минимальная выгода или поле максимальный риск!')
         return self.cleaned_data['maximum_risk']
