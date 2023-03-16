@@ -156,7 +156,7 @@ def get_min_profit(max_risk, companies):
     for i in ShareInfo.objects.filter(name__in=companies).all():
         rez[i.name] = i.info
     a = Markov(res_pars=rez, risk=max_risk)
-    make_gr(a[-1], "static/Mark.png")
+    make_gr(a[-1], "media/Mark.png")
     return a[:-1]
 
 
@@ -165,5 +165,5 @@ def get_max_risk(min_profit, companies):
     for i in ShareInfo.objects.filter(name__in=companies).all():
         rez[i.name] = i.info
     a = Markov(res_pars=rez, min_sum=min_profit)
-    make_gr(a[-1], "static/Mark.png")
+    make_gr(a[-1], "media/Mark.png")
     return a[:-1]
