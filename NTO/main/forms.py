@@ -22,16 +22,19 @@ class FormStyleMixin(forms.Form):
                 attrs['class'] += ' form-control'
 
 
+# Форма регистрация
 class RegisterUserForm(UserForms.UserCreationForm, FormStyleMixin):
     class Meta:
         model = User
         fields = ('username', 'password1', 'password2')
 
 
+# Форма входа в аккаунт
 class LoginUserForm(UserForms.AuthenticationForm, FormStyleMixin):
     username = forms.CharField(label='Логин', max_length=150)
 
 
+# Форма Получения данных для портфеля
 class ShareParamsForm(forms.Form):
     share_names = forms.MultipleChoiceField(label='Названия акций', choices=COMPANIES,
                                             widget=forms.CheckboxSelectMultiple)

@@ -5,6 +5,7 @@ class MainConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'main'
 
+    # Ввод данных акций в бд
     def ready(self):
         import csv
         from .models import ShareInfo
